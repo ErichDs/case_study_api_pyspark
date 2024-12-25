@@ -1,0 +1,82 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table events {
+  id integer [primary key]
+  event_timestamp timestamp
+  user_id varchar
+  event_name varchar
+}
+
+Table users {
+  user_id varchar [primary key]
+}
+
+Table user_level {
+  user_id varchar
+  jurisdiction varchar
+  level integer
+  event_timestamp timestamp
+}
+
+Table transactions {
+  id integer [primary key]
+  event_timestamp timestamp
+  user_id varchar
+  amount float
+  interface varchar
+  currency varchar
+  tx_status varchar
+  direction varchar
+  product_id integer
+}
+
+Table products {
+  product_id integer [primary key]
+  name varchar
+  jurisdiction varchar
+}
+
+Table loans {
+  loan_id varchar [primary key]
+  created_at timestamp
+  ended_at timestamp
+  user_id varchar
+  value float
+  product_id integer
+}
+
+Table collateral {
+  collateral_id varchar [primary key]
+  created_at timestamp
+  ended_at timestamp
+  asset_id varchar
+  loan_id varchar
+  ended_reason varchar
+  product_id integer
+}
+
+Table country {
+  country_id varchar [primary key]
+  jurisdiction varchar
+}
+
+Ref: users.user_id < user_level.user_id
+
+Ref: users.user_id < events.user_id
+
+Ref: users.user_id < transactions.user_id
+
+Ref: transactions.product_id > products.product_id
+
+Ref: loans.product_id > products.product_id
+
+Ref: loans.user_id > users.user_id
+
+Ref: collateral.loan_id > loans.loan_id
+
+Ref: collateral.product_id > products.product_id
+
+Ref: products.jurisdiction > country.jurisdiction
+
+Ref: user_level.jurisdiction > country.jurisdiction
