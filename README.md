@@ -1,6 +1,9 @@
 # Bitso Case
 ## How to execute
 
+run `python3 venv venv` to work with your virtual environment
+run `docker compose up` to initialize airflow
+
 The project is divided into 2 main folders under src/
 - challenge_1
 - challenge_2
